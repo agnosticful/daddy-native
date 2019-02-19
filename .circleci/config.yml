@@ -29,19 +29,19 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run:
-        name: Log into Expo
-        command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+          name: Log into Expo
+          command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
       - run:
           name: Publish to Expo
-          command: npx expo publish --non-interactive --max-workers 1 --release-channel development
+          command: npx expo publish --non-interactive --max-workers 1 --release-channel dev-${CIRCLE_BRANCH}
   publish-stable:
     <<: *general_options
     steps:
       - attach_workspace:
           at: ~/repo
       - run:
-        name: Log into Expo
-        command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+          name: Log into Expo
+          command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
       - run:
           name: Publish to Expo
           command: npx expo publish --non-interactive --max-workers 1 --release-channel stable
