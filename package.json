@@ -1,0 +1,30 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@expo/samples": "2.1.1",
+    "@expo/vector-icons": "^9.0.0",
+    "@types/react-navigation": "^3.0.2",
+    "expo": "^32.0.0",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-navigation": "^3.0.9"
+  },
+  "devDependencies": {
+    "@types/expo": "^32.0.2",
+    "@types/expo__vector-icons": "^9.0.1",
+    "@types/jest": "^24.0.6",
+    "@types/react": "^16.8.3",
+    "@types/react-native": "^0.57.36",
+    "@types/react-test-renderer": "^16.8.1",
+    "expo-cli": "^2.10.1",
+    "jest": "^24.1.0",
+    "jest-expo": "^32.0.0",
+    "ts-jest": "^24.0.0",
+    "typescript": "^3.3.3"
+  },
+  "private": true
+}

@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "D.A.D.D.Y",
+    "description": "",
+    "privacy": "public",
+    "version": "0.0.0",
+    "slug": "daddy",
+    "githubUrl": "https://github.com/agnosticful/daddy-native",
+    "sdkVersion": "32.0.0",
+    "platforms": ["ios", "android"],
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
