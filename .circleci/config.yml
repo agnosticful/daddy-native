@@ -1,0 +1,67 @@
+version: 2
+general_options: &general_options
+  docker:
+    - image: circleci/node:10
+  working_directory: ~/repo
+jobs:
+  checkout:
+    <<: *general_options
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm i --ci
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .
+  test:
+    <<: *general_options
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Test
+          command: npm run test -- --ci
+  publish-development:
+    <<: *general_options
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+        name: Log into Expo
+        command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+      - run:
+          name: Publish to Expo
+          command: npx expo publish --non-interactive --max-workers 1 --release-channel development
+  publish-stable:
+    <<: *general_options
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+        name: Log into Expo
+        command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+      - run:
+          name: Publish to Expo
+          command: npx expo publish --non-interactive --max-workers 1 --release-channel stable
+workflows:
+  version: 2
+  default:
+    jobs:
+      - checkout
+      - test:
+          requires:
+            - checkout
+      - publish-development:
+          filters:
+            branches:
+              ignore: master
+          requires:
+            - test
+      - publish-stable:
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
