@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  Animated,
   GestureResponderEvent,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -9,14 +10,18 @@ import {
 
 interface Props extends ViewProps {
   onPress: (event: GestureResponderEvent) => void;
+  style: any;
 }
 
 function Checkbox({ onPress, style, ...props }: Props) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View style={StyleSheet.flatten([styles.container, style])} {...props}>
+      <Animated.View
+        style={StyleSheet.flatten([styles.container, style])}
+        {...props}
+      >
         <View style={styles.circle} />
-      </View>
+      </Animated.View>
     </TouchableWithoutFeedback>
   );
 }
