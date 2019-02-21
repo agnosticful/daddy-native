@@ -2,13 +2,13 @@ import * as React from "react";
 import { Platform } from "react-native";
 import { createBottomTabNavigator } from "react-navigation";
 import { TabBarIcon } from "../components";
-import HomeNavigator from "./HomeNavigator";
 import LinksNavigator from "./LinksNavigator";
+import ListNavigator from "./ListNavigator";
 import SettingsNavigator from "./SettingsNavigator";
 
 const MainNavigator = createBottomTabNavigator({
-  HomeStack: {
-    screen: HomeNavigator,
+  ListStack: {
+    screen: ListNavigator,
     navigationOptions: {
       tabBarLabel: "Home",
       tabBarIcon: ({ focused }: { focused?: true }) => (
