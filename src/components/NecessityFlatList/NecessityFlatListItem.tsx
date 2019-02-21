@@ -59,7 +59,6 @@ class NecessityFlatListItem extends React.Component<Props, State> {
             <Checkbox
               onPress={() => this.onCheckboxPress()}
               style={[
-                styles.checkbox,
                 {
                   opacity: this.state.disappearanceAnimation.interpolate({
                     inputRange: [0, 2],
@@ -123,7 +122,6 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     backgroundColor: "#fff"
   },
-  checkbox: {},
   text: {
     paddingTop: 16,
     paddingBottom: 16,
