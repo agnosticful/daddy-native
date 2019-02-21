@@ -10,12 +10,6 @@ import {
 import { Necessity } from "../../domains";
 import Checkbox from "./Checkbox";
 
-const DISAPPEARANCE_ANIMATION_VALUE_FROM = 0;
-const DISAPPEARANCE_ANIMATION_VALUE_TO = 1;
-const DISAPPEARANCE_ANIMATION_DURATION = 375;
-const DISAPPEARANCE_ANIMATION_CONTENT_BREAKPOINT = 75 / 375;
-const DISAPPEARANCE_ANIMATION_CONTAINER_BREAKPOINT = 1 - 150 / 375;
-
 interface Props extends ViewProps {
   necessity: Necessity;
   onDeleteRequested: () => void;
@@ -29,15 +23,7 @@ class NecessityFlatListItem extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    const disappearanceAnimation = new Animated.Value(
-      DISAPPEARANCE_ANIMATION_VALUE_FROM
-    );
-
-    disappearanceAnimation.addListener(({ value }) => {
-      if (value === DISAPPEARANCE_ANIMATION_VALUE_TO) {
-        this.onDisappearanceAnimationFinished();
-      }
-    });
+    const disappearanceAnimation = new Animated.Value(0);
 
     this.state = { disappearanceAnimation };
   }
@@ -58,12 +44,12 @@ class NecessityFlatListItem extends React.Component<Props, State> {
               styles.container,
               {
                 maxHeight: this.state.disappearanceAnimation.interpolate({
-                  inputRange: [
-                    0,
-                    DISAPPEARANCE_ANIMATION_CONTAINER_BREAKPOINT,
-                    1
-                  ],
-                  outputRange: [this.maxHeight, this.maxHeight, 0]
+                  inputRange: [6, 10],
+                  outputRange: [this.maxHeight, 0]
+                }),
+                paddingLeft: this.state.disappearanceAnimation.interpolate({
+                  inputRange: [6, 10],
+                  outputRange: [8, 0]
                 })
               },
               style
@@ -71,20 +57,16 @@ class NecessityFlatListItem extends React.Component<Props, State> {
             {...props}
           >
             <Checkbox
+              onPress={() => this.onCheckboxPress()}
               style={[
                 styles.checkbox,
                 {
                   opacity: this.state.disappearanceAnimation.interpolate({
-                    inputRange: [
-                      0,
-                      DISAPPEARANCE_ANIMATION_CONTENT_BREAKPOINT,
-                      1
-                    ],
-                    outputRange: [1, 0, 0]
+                    inputRange: [0, 2],
+                    outputRange: [1, 0]
                   })
                 }
               ]}
-              onPress={() => this.onCheckboxPress()}
             />
 
             <Animated.Text
@@ -92,12 +74,8 @@ class NecessityFlatListItem extends React.Component<Props, State> {
                 styles.text,
                 {
                   opacity: this.state.disappearanceAnimation.interpolate({
-                    inputRange: [
-                      0,
-                      DISAPPEARANCE_ANIMATION_CONTENT_BREAKPOINT,
-                      1
-                    ],
-                    outputRange: [1, 0, 0]
+                    inputRange: [0, 2],
+                    outputRange: [1, 0]
                   })
                 }
               ]}
@@ -111,13 +89,9 @@ class NecessityFlatListItem extends React.Component<Props, State> {
           style={[
             styles.divider,
             {
-              maxHeight: this.state.disappearanceAnimation.interpolate({
-                inputRange: [0, DISAPPEARANCE_ANIMATION_CONTENT_BREAKPOINT, 1],
-                outputRange: [1, 1, 0]
-              }),
               opacity: this.state.disappearanceAnimation.interpolate({
-                inputRange: [0, DISAPPEARANCE_ANIMATION_CONTENT_BREAKPOINT, 1],
-                outputRange: [1, 1, 0]
+                inputRange: [2, 10],
+                outputRange: [1, 0]
               })
             }
           ]}
@@ -132,14 +106,12 @@ class NecessityFlatListItem extends React.Component<Props, State> {
 
   private onCheckboxPress() {
     Animated.timing(this.state.disappearanceAnimation, {
-      toValue: DISAPPEARANCE_ANIMATION_VALUE_TO,
+      toValue: 10,
       easing: Easing.ease,
-      duration: DISAPPEARANCE_ANIMATION_DURATION
-    }).start();
-  }
-
-  private onDisappearanceAnimationFinished() {
-    this.props.onDeleteRequested();
+      duration: 375
+    }).start(() => {
+      this.props.onDeleteRequested();
+    });
   }
 }
 
@@ -148,7 +120,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    paddingLeft: 8,
     paddingRight: 8,
     backgroundColor: "#fff"
   },
